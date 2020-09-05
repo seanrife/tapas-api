@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Table Upload</title>
+</head>
+<body>
+<form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+    <table>
+        {% for names in invList %}
+            <tr>
+                <td>{{ names }}</td>
+                <td><input type="file" name="file"></td>
+            </tr>
+        {% endfor %}
+    </table>
+    <input type="submit" value="Upload Investors">
+</form>
+</body>
+</html>
