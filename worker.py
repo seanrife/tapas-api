@@ -4,7 +4,7 @@ import os
 from db import get_cursor
 import config
 from pdf2xml import process
-from common import update_status
+from common import update_status, logger
 from jayne import run
 from time import sleep
 
@@ -12,24 +12,8 @@ from psycopg2.extras import execute_batch
 
 UPLOAD_FOLDER = config.UPLOAD_FOLDER
 
-while True:
-
-    with get_cursor(commit=True) as cursor:
-        query = """
-                SELECT job_id FROM jobs
-                WHERE status = 'READY'
-                LIMIT 1;
-                """
-        cursor.execute(query)
-        job_id = cursor.fetchone()
-        
-        if job_id:
-            job_id = job_id[0]
-        else:
-            sleep(5)
-            pass
-
-        working_dir = os.path.join(UPLOAD_FOLDER, job_id)
+def process_job(job_id):
+    working_dir = os.path.join(UPLOAD_FOLDER, job_id)
 
     paths = Path(working_dir).rglob('*.zip')
     for path in paths:
@@ -78,3 +62,23 @@ while True:
         execute_batch(cursor, query, results)
 
     update_status(job_id, "FINISHED")
+
+
+while True:
+
+    with get_cursor(commit=True) as cursor:
+        query = """
+                SELECT job_id FROM jobs
+                WHERE status = 'READY'
+                LIMIT 1;
+                """
+        cursor.execute(query)
+        job_id = cursor.fetchone()
+        
+    if job_id:
+        logger(f"Processing job id {job_id[0]}.")
+        process_job(job_id[0])
+    else:
+        sleep(5)
+
+

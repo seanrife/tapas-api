@@ -5,6 +5,8 @@ import argparse
 import os
 import io
 
+from common import logger
+
 grobid_address = config.grobid['host']
 grobid_path = config.grobid['path']
 grobid_port = config.grobid['port']
@@ -45,7 +47,7 @@ def grobid(file_name, grobid_address, grobid_path, grobid_port):
         working_xml = response.content.decode("utf-8")
         return working_xml
     except requests.exceptions.ConnectionError as e:
-        print("GROBID connection error. Is it running?")
+        logger("GROBID connection error. Is it running?")
         raise e
 
 
@@ -57,11 +59,11 @@ def write_output(filename, data):
 
 def process(filename, job_id):
     filename = str(filename)
-    print("Working on " + filename)
+    logger(f"Working on {filename}.")
     try:
         xml = grobid(filename, grobid_address, grobid_path, grobid_port)
         write_output(filename, xml)
         return True
     except Exception as e:
-        print("Error processing file. Skipping. " + str(e))
+        logger(f"Error processing file. Skipping. {str(e)}")
         return False
