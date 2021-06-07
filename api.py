@@ -3,10 +3,10 @@ from werkzeug.utils import secure_filename
 from flask import Flask, render_template, request, send_from_directory, jsonify
 from coolname import generate_slug
 from zipfile import ZipFile
-from db import get_cursor
+from lib.db import get_cursor
 import config
 import csv
-from common import logger
+from lib.common import logger
 
 api = Flask(__name__)
 

@@ -1,7 +1,7 @@
 import argparse
 import config
-from analyze import get_distance
-from parse_tei import process_tei
+from lib.analyze import get_distance
+from lib.parse_tei import process_tei
 from multiprocessing import Pool
 from itertools import combinations
 import os

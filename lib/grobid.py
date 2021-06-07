@@ -5,7 +5,7 @@ import argparse
 import os
 import io
 
-from common import logger
+from lib.common import logger
 
 grobid_address = config.grobid['host']
 grobid_path = config.grobid['path']

@@ -1,4 +1,4 @@
-from db import get_cursor
+from lib.db import get_cursor
 import time
 import os
 

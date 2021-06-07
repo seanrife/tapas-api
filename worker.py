@@ -3,9 +3,9 @@ from pathlib import Path
 import os
 from db import get_cursor
 import config
-from pdf2xml import process
-from common import update_status, logger
-from jayne import run
+from lib.grobid import process
+from lib.common import update_status, logger
+from lib.jayne import run
 from time import sleep
 
 from psycopg2.extras import execute_batch
