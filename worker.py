@@ -10,6 +10,13 @@ from time import sleep
 
 from psycopg2.extras import execute_batch
 
+"""
+Runs in the background looking for unprocessed jobs.
+When it find one, locates and extracts the archive,
+then converts the PDFs to TEI, extracts the text, and
+looks for similarity (basically everything else).
+"""
+
 UPLOAD_FOLDER = config.UPLOAD_FOLDER
 
 def process_job(job_id):

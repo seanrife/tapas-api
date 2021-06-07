@@ -8,6 +8,12 @@ import os
 import time
 from common import logger, update_status, mkdirp
 
+"""
+Main functions cribbed from https://github.com/seanrife/jayne
+Compares sets of strings and returns ones above a set level
+of similarity.
+"""
+
 version = '0.64'
 
 min_length = config.analysis['min_length']
@@ -16,9 +22,6 @@ analysis_type = config.analysis["analysis_type"]
 process_count = config.system["process_count"]
 
 completed_list = []
-
-
-# def update_db(job_id, file1, file2, text1, text2, score, score_type):
 
 
 # This function makes me feel sad
@@ -98,5 +101,7 @@ def run(in_dir):
 
     for pair in paired_papers:
         comparison = compare(pair['file1'], pair['file2'], pair['list1'], pair['list2'])
+        comparisons = comparisons + comparison
+    return comparisons2'])
         comparisons = comparisons + comparison
     return comparisons

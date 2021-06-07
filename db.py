@@ -15,7 +15,7 @@ class Connections:
     def __getitem__(self, database):
         pool = self._pools.get(database, None)
         if database not in AVAILABLE_POOLS:
-            raise ValueError('Available pools are %r' % AVAILABLE_POOLS)
+            raise ValueError('Error. DB not in pool list.')
 
         if not pool:
             self.init_pool(database)
@@ -34,11 +34,11 @@ class Connections:
                 dbname=db['db']
             )
         except Exception as e:
-            print("Failed to connect to %s DB", database)
+            print("Failed to connect to db")
             print(str(e))
 
             if retry_count < retries:
-                print("Attempting to reconnect to %s in %ss", database, retry_wait)
+                print("Attempting to reconnect to db.")
                 sleep(retry_wait)
                 self.init_pool(database, retry_count=(retry_count + 1))
 
