@@ -2,7 +2,7 @@
 
 tapas is basically a web implementation of [jayne](https://github.com/seanrife/jayne). It accepts file uploads while backend worker(s) process the uploaded files. It requires Postgres, which it uses as a job cue and to hold results.
 
-The production version runs on a PowerEdge R7525 with two AMD EPYC 7552 48-Core Processors at [Murray State University]{https://murraystate.edu). It's a beast. As such, your mileage may vary when testing locally.
+The production version runs on a PowerEdge R7525 with two AMD EPYC 7552 48-Core Processors at [Murray State University](https://murraystate.edu). It's a beast. As such, your mileage may vary when testing locally.
 
 Requirements:
  - flask
