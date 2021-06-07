@@ -8,6 +8,7 @@ bs4 = "*"
 nltk = "*"
 lxml = "*"
 strsim = "*"
+flask = "*"
 
 [dev-packages]
 
