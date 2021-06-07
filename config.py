@@ -3,7 +3,7 @@ import os
 
 DB_PASSWORD = os.environ['DB_PASSWORD']
 UPLOAD_FOLDER = '/tapas/uploads/'
-BASE_URL = 'http://tapas.murraystate.edu:5000'
+BASE_URL = 'http://tapas.murraystate.edu:2600'
 
 db = {
     'host': 'localhost',
