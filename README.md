@@ -22,7 +22,8 @@ Modules:
 Endpoints:
  - /upload (POST): accepts one or more files; returns `status_url` which indicates where new status updates will be posted, and where results can be obtained once the job is complete.
  - /jobs/`jobid` (GET): indicates the status of a given job id.
- - /downloads/`jobid` (GET): returns a CSV of results for a give job id.
+ - /downloads/`jobid` (GET): returns a CSV of results for a given job id.
+ - /results/`jobid` (GET): returns results for a given job id in JSON.
 
 TODO:
  - Tests are a thing.
