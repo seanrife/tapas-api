@@ -6,7 +6,7 @@ The production version runs on a PowerEdge R7525 with two AMD EPYC 7552 48-Core 
 
 System Requirements:
  - Postgres
- - [GROBID](https://github.com/kermitt2/grobid)
+ - [GROBID](https://github.com/kermitt2/grobid) (to convert PDFs to TEI XML)
  - Works on Linux (specifically Ubuntu/Debian variants), but should run fine on Mac OS and other Linux flavors.
 
 Python Libraries:
