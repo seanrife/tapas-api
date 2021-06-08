@@ -6,8 +6,8 @@ The production version runs on a PowerEdge R7525 with two AMD EPYC 7552 48-Core 
 
 System Requirements:
  - Postgres
- - [GROBID](https://github.com/kermitt2/grobid) (to convert PDFs to TEI XML)
- - Works on Linux (specifically Ubuntu/Debian variants), but should run fine on Mac OS and other Linux flavors.
+ - [GROBID](https://github.com/kermitt2/grobid) (to convert PDFs to TEI XML; please use your own, local GROBID instance rather the publically-available testing server).
+ - Works on Linux (specifically Ubuntu/Debian variants), but should run fine on Mac OS and other Linux flavors. YMMV.
 
 Python Libraries:
  - flask
@@ -25,7 +25,7 @@ Endpoints:
  - /downloads/`jobid` (GET): returns a CSV of results for a give job id.
 
 TODO:
- - Tests
- - A preconfigured Docker container for Postgres
+ - Tests are a thing.
+ - A preconfigured Docker container for Postgres?
 
 This project is made possible by the generous support of the [Fetzer Franklin Fund](https://www.fetzer-franklin-fund.org/) and [Center for Open Science](https://cos.io).
