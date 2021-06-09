@@ -37,6 +37,11 @@ def get_data(job_id):
             return None
 
 
+@api.route('/')
+def index():
+    return jsonify({'message': 'API is running. Shiny!'})
+
+
 @api.route('/downloads/<job_id>')
 def download(job_id):
     results = get_data(job_id)
@@ -61,9 +66,18 @@ def job(name):
     return jsonify({'status': status})
 
 
-@api.route('/')
-def index():
-    return jsonify({'message': 'API is running. Shiny!'})
+@api.route('/results/<job_id>')
+def results(job_id):
+    results = get_data(job_id)
+    parsed_results = []
+    for idx, result in enumerate(results):
+        parsed_results.append({'result_number': idx,
+                               'file1': result[0],
+                               'file2': result[1],
+                               'text1': result[2],
+                               'text2': result[3],
+                               'similarity': result[4]})
+    return jsonify(parsed_results)
 
 
 @api.route("/upload", methods=["POST"])
