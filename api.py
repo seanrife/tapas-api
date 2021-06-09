@@ -37,6 +37,11 @@ def get_data(job_id):
             return None
 
 
+@api.route('/')
+def index():
+    return jsonify({'message': 'API is running. Shiny!'})
+
+
 @api.route('/downloads/<job_id>')
 def download(job_id):
     results = get_data(job_id)
@@ -73,12 +78,6 @@ def results(job_id):
                                'text2': result[3],
                                'similarity': result[4]})
     return jsonify(parsed_results)
-
-
-
-@api.route('/')
-def index():
-    return jsonify({'message': 'API is running. Shiny!'})
 
 
 @api.route("/upload", methods=["POST"])
