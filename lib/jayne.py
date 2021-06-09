@@ -102,6 +102,4 @@ def run(in_dir):
     for pair in paired_papers:
         comparison = compare(pair['file1'], pair['file2'], pair['list1'], pair['list2'])
         comparisons = comparisons + comparison
-    return comparisons2'])
-        comparisons = comparisons + comparison
     return comparisons
