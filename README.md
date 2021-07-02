@@ -5,7 +5,7 @@ tapas is basically a web implementation of [jayne](https://github.com/seanrife/j
 The production version runs on a PowerEdge R7525 with two AMD EPYC 7552 48-Core Processors at [Murray State University](https://murraystate.edu). It's a beast. As such, your mileage may vary when testing locally. You should adjust `process_count` in `config.py` to be roughly equal to the number of logical cores on your local hardware (at least initially).
 
 System Requirements:
- - Postgres
+ - Postgres v12+
  - [GROBID](https://github.com/kermitt2/grobid) (to convert PDFs to TEI XML; please use your own, local GROBID instance rather the publically-available testing server).
  - Works on Linux (specifically Ubuntu/Debian variants), but should run fine on Mac OS and other Linux flavors. YMMV.
 
