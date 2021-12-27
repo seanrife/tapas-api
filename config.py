@@ -1,4 +1,7 @@
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 DB_PASSWORD = os.environ['DB_PASSWORD']
