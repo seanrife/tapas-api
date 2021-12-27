@@ -5,8 +5,8 @@ name = "pypi"
 
 [packages]
 bs4 = "*"
-nltk = "*"
-lxml = "*"
+nltk = ">=3.6.4"
+lxml = "lxml = ">=4.6.5"
 strsim = "*"
 flask = "*"
 
