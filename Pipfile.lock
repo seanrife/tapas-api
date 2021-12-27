@@ -49,11 +49,11 @@
         },
         "importlib-metadata": {
             "hashes": [
-                "sha256:53ccfd5c134223e497627b9815d5030edf77d2ed573922f7a0b8f8bb81a1c100",
-                "sha256:75bdec14c397f528724c1bfd9709d660b33a4d2e77387a3358f20b848bb5e5fb"
+                "sha256:92a8b58ce734b2a4494878e0ecf7d79ccd7a128b5fc6014c401e0b61f006f0f6",
+                "sha256:b7cf7d3fef75f1e4c80a96ca660efbd51473d7e8f39b5ab9210febc7809012a4"
             ],
             "markers": "python_version < '3.8'",
-            "version": "==4.8.2"
+            "version": "==4.10.0"
         },
         "itsdangerous": {
             "hashes": [
@@ -222,11 +222,11 @@
         },
         "nltk": {
             "hashes": [
-                "sha256:240e23ab1ab159ef9940777d30c7c72d7e76d91877099218a7585370c11f6b9e",
-                "sha256:57d556abed621ab9be225cc6d2df1edce17572efb67a3d754630c9f8381503eb"
+                "sha256:834d1a8e38496369390be699be9bca4f2a0f2175b50327272b2ec7a98ffda2a0",
+                "sha256:95fb4f577efe93af21765e9b2852235c2c6a405885da2a70f397478d94e906e0"
             ],
             "index": "pypi",
-            "version": "==3.6.2"
+            "version": "==3.6.5"
         },
         "regex": {
             "hashes": [
