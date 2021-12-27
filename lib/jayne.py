@@ -6,7 +6,7 @@ from multiprocessing import Pool
 from itertools import combinations
 import os
 import time
-from common import logger, update_status, mkdirp
+from lib.common import logger, update_status, mkdirp
 
 """
 Main functions cribbed from https://github.com/seanrife/jayne
