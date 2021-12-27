@@ -1,7 +1,6 @@
-from zipfile import ZipFile
 from pathlib import Path
 import os
-from db import get_cursor
+from lib.db import get_cursor
 import config
 from lib.grobid import process
 from lib.common import update_status, logger
@@ -21,13 +20,6 @@ UPLOAD_FOLDER = config.UPLOAD_FOLDER
 
 def process_job(job_id):
     working_dir = os.path.join(UPLOAD_FOLDER, job_id)
-
-    paths = Path(working_dir).rglob('*.zip')
-    for path in paths:
-        with ZipFile(path) as zf:
-            zf.extractall(working_dir)
-
-    update_status(job_id, "EXTRACTED")
 
     pdfs = Path(working_dir).rglob('*.pdf')
     file_count = 0
