@@ -25,7 +25,7 @@ completed_list = []
 
 
 # This function makes me feel sad
-def compare(file1, file2, list1, list2):
+def compare(file1, file2, list1, list2, cutoff_score):
     pool = Pool()
     start_time = time.process_time()
     
@@ -35,7 +35,7 @@ def compare(file1, file2, list1, list2):
     
     for item1 in list1:
         for item2 in list2:
-            data_list.append((item1, item2, file1, file2))
+            data_list.append((item1, item2, file1, file2, cutoff_score))
     results = pool.starmap(run_comparison, data_list)
     end_time = time.process_time()
     logger('END TIME: {0}'.format(time.strftime("%Y-%m-%d %H:%M:%S")))
@@ -71,7 +71,7 @@ def create_pairs(results):
     return pairs
 
     
-def run_comparison(item1, item2, file1, file2):
+def run_comparison(item1, item2, file1, file2, cutoff_score):
     score = get_distance(item1, item2)
 
     if score <= cutoff_score:
@@ -83,7 +83,7 @@ def run_comparison(item1, item2, file1, file2):
         return entry
 
 
-def run(in_dir):
+def run(in_dir, cutoff_score):
     results = process_tei(in_dir, min_length)
 
     logger("Creating pairs...")
@@ -100,6 +100,6 @@ def run(in_dir):
     comparisons = []
 
     for pair in paired_papers:
-        comparison = compare(pair['file1'], pair['file2'], pair['list1'], pair['list2'])
+        comparison = compare(pair['file1'], pair['file2'], pair['list1'], pair['list2'], cutoff_score)
         comparisons = comparisons + comparison
     return comparisons

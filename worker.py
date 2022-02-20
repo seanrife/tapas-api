@@ -18,7 +18,11 @@ looks for similarity (basically everything else).
 
 UPLOAD_FOLDER = config.UPLOAD_FOLDER
 
-def process_job(job_id):
+def process_job(job):
+    
+    job_id = job[0]
+    job_cutoff = job[1]
+    
     working_dir = os.path.join(UPLOAD_FOLDER, job_id)
 
     pdfs = Path(working_dir).rglob('*.pdf')
@@ -32,7 +36,7 @@ def process_job(job_id):
 
     percent_complete = 0
 
-    results = run(working_dir)
+    results = run(working_dir, job_cutoff)
 
     for item in results:
         item.update({'slug':job_id})
@@ -67,16 +71,16 @@ while True:
 
     with get_cursor(commit=True) as cursor:
         query = """
-                SELECT job_id FROM jobs
+                SELECT job_id, cutoff FROM jobs
                 WHERE status = 'READY'
                 LIMIT 1;
                 """
         cursor.execute(query)
-        job_id = cursor.fetchone()
+        job = cursor.fetchone()
         
-    if job_id:
-        logger(f"Processing job id {job_id[0]}.")
-        process_job(job_id[0])
+    if job:
+        logger(f"Processing job id {job[0]}.")
+        process_job(job)
     else:
         sleep(5)
 

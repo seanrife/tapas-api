@@ -121,12 +121,15 @@ def upload():
         list_of_files.append(filename)
         file.save(os.path.join(UPLOAD_FOLDER, slug, filename))
         
+    cutoff = request.form['cutoff']
+
+
     with get_cursor(commit=True) as cursor:
         query = """
-                INSERT INTO jobs (job_id, status)
-                VALUES (%s, %s);
+                INSERT INTO jobs (job_id, status, cutoff)
+                VALUES (%s, %s, %s);
                 """
-        cursor.execute(query, (slug, "READY"))
+        cursor.execute(query, (slug, "READY", cutoff))
 
     return jsonify({'status_id': slug, 'files': list_of_files})
 
