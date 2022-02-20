@@ -1,7 +1,6 @@
-from zipfile import ZipFile
 from pathlib import Path
 import os
-from db import get_cursor
+from lib.db import get_cursor
 import config
 from lib.grobid import process
 from lib.common import update_status, logger
@@ -19,15 +18,12 @@ looks for similarity (basically everything else).
 
 UPLOAD_FOLDER = config.UPLOAD_FOLDER
 
-def process_job(job_id):
+def process_job(job):
+    
+    job_id = job[0]
+    job_cutoff = job[1]
+    
     working_dir = os.path.join(UPLOAD_FOLDER, job_id)
-
-    paths = Path(working_dir).rglob('*.zip')
-    for path in paths:
-        with ZipFile(path) as zf:
-            zf.extractall(working_dir)
-
-    update_status(job_id, "EXTRACTED")
 
     pdfs = Path(working_dir).rglob('*.pdf')
     file_count = 0
@@ -40,7 +36,7 @@ def process_job(job_id):
 
     percent_complete = 0
 
-    results = run(working_dir)
+    results = run(working_dir, job_cutoff)
 
     for item in results:
         item.update({'slug':job_id})
@@ -75,17 +71,15 @@ while True:
 
     with get_cursor(commit=True) as cursor:
         query = """
-                SELECT job_id FROM jobs
+                SELECT job_id, cutoff FROM jobs
                 WHERE status = 'READY'
                 LIMIT 1;
                 """
         cursor.execute(query)
-        job_id = cursor.fetchone()
+        job = cursor.fetchone()
         
-    if job_id:
-        logger(f"Processing job id {job_id[0]}.")
-        process_job(job_id[0])
+    if job:
+        logger(f"Processing job id {job[0]}.")
+        process_job(job)
     else:
         sleep(5)
-
-
