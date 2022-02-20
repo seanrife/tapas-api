@@ -83,5 +83,3 @@ while True:
         process_job(job)
     else:
         sleep(5)
-
-
