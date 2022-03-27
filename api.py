@@ -70,7 +70,7 @@ def download(job_id):
     downloads = '/tapas/tapas/downloads'
     if not os.path.exists(f"{downloads}/{job_id}.csv"):
         generate_csv(job_id, results)
-    return send_from_directory(directory=downloads, filename=f"{job_id}.csv", as_attachment=True)
+    return send_from_directory(directory=downloads, path=f"{job_id}.csv", as_attachment=True)
 
 
 @api.route('/jobs/<name>')
