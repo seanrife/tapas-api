@@ -5,7 +5,7 @@ import config
 from lib.grobid import process
 from lib.common import update_status, logger
 from lib.jayne import run
-from time import sleep
+from time import sleep, time
 
 from psycopg2.extras import execute_batch
 
@@ -19,6 +19,8 @@ looks for similarity (basically everything else).
 UPLOAD_FOLDER = config.UPLOAD_FOLDER
 
 def process_job(job):
+
+    start_time = time()
     
     job_id = job[0]
     job_cutoff = job[1]
@@ -65,7 +67,23 @@ def process_job(job):
         execute_batch(cursor, query, results)
 
     update_status(job_id, "FINISHED")
+    
+    end_time = time()
+    
+    compute_time = end_time-start_time
+    
+    logger(f"Job completed in {compute_time} seconds.")
 
+
+min_length = config.analysis['min_length']
+cutoff_score = config.analysis['cutoff_score']
+analysis_type = config.analysis["analysis_type"]
+process_count = config.system["process_count"]
+
+logger(f"Started master worker process.")
+logger(f"Minimum length: {min_length}")
+logger(f"Analysis type: {analysis_type}")
+logger(f"Process count: {process_count}")
 
 while True:
 
@@ -79,6 +97,7 @@ while True:
         job = cursor.fetchone()
         
     if job:
+        logger("  ====================  GOT NEW JOB  ====================  ")
         logger(f"Processing job id {job[0]}.")
         process_job(job)
     else:

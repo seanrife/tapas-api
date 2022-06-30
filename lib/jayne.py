@@ -26,8 +26,8 @@ completed_list = []
 
 # This function makes me feel sad
 def compare(file1, file2, list1, list2, cutoff_score):
-    pool = Pool()
-    start_time = time.process_time()
+    logger(f"Comparing {file1} and {file2}.")
+    pool = Pool(processes=process_count)
     
     data_list = []
     
@@ -37,9 +37,6 @@ def compare(file1, file2, list1, list2, cutoff_score):
         for item2 in list2:
             data_list.append((item1, item2, file1, file2, cutoff_score))
     results = pool.starmap(run_comparison, data_list)
-    end_time = time.process_time()
-    logger('END TIME: {0}'.format(time.strftime("%Y-%m-%d %H:%M:%S")))
-    logger('Time to process: '.format(end_time-start_time))
     for result in results:
         if result:
             results_final.append(result)
@@ -93,9 +90,8 @@ def run(in_dir, cutoff_score):
     logger("Done! Running comparisons.")
 
     logger('jayne v{0} initialized'.format(version))
-    logger('START TIME: {0}'.format(time.strftime("%Y-%m-%d %H:%M:%S")))
-    logger('Total number of comparisons requested: '.format(len(paired_papers)))
-    logger('Number of independent processes: '.format(process_count))
+    logger('Total number of comparisons requested: {0}'.format(len(paired_papers)))
+    logger('Number of independent processes: {0}'.format(process_count))
 
     comparisons = []
 

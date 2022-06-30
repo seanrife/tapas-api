@@ -1,5 +1,5 @@
 from lib.db import get_cursor
-import time
+import datetime
 import os
 
 def update_status(job_id, status):
@@ -16,6 +16,8 @@ def logger(text):
     mkdirp('logs')
     logfile_name = 'logs/jayne.log'
     with open(logfile_name, mode='a') as logfile:
+        now = datetime.datetime.now()
+        logfile.write('[' + str(now) + '] ')
         logfile.write(text + '\n')
 
 

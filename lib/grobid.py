@@ -59,7 +59,7 @@ def write_output(filename, data):
 
 def process(filename, job_id):
     filename = str(filename)
-    logger(f"Working on {filename}.")
+    logger(f"Extracting text from {filename}.")
     try:
         xml = grobid(filename, grobid_address, grobid_path, grobid_port)
         write_output(filename, xml)
