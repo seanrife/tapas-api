@@ -3,10 +3,12 @@ import config
 from lib.analyze import get_distance
 from lib.parse_tei import process_tei
 from multiprocessing import Pool
+from multiprocessing.pool import ThreadPool
 from itertools import combinations
 import os
 import time
 from lib.common import logger, update_status, mkdirp
+from lib.preprocess import preprocess
 
 """
 Main functions cribbed from https://github.com/seanrife/jayne
@@ -24,6 +26,12 @@ process_count = config.system["process_count"]
 completed_list = []
 
 
+def divide_chunks(l, n):
+    # looping till length l
+    for i in range(0, len(l), n):
+        yield l[i:i + n]
+
+
 # This function makes me feel sad
 def compare(file1, file2, list1, list2, cutoff_score):
     logger(f"Comparing {file1} and {file2}.")
@@ -33,14 +41,23 @@ def compare(file1, file2, list1, list2, cutoff_score):
     
     results_final = []
     
-    for item1 in list1:
-        for item2 in list2:
-            data_list.append((item1, item2, file1, file2, cutoff_score))
-    results = pool.starmap(run_comparison, data_list)
-    for result in results:
-        if result:
-            results_final.append(result)
-    return results_final
+    preprocessed_results = preprocess(list1, list2)
+    
+    preprocessed_results = sorted(preprocessed_results, key=lambda d: d['score'], reverse=True)
+            
+    for row in preprocessed_results:
+        data_list.append((row['item1'], row['item2'], file1, file2, cutoff_score))
+        
+    data_list_chunked = divide_chunks(data_list, 10)
+    
+    for chunk in data_list_chunked:
+        results = pool.starmap(run_comparison, chunk)
+        print(results)
+        for result in results:
+            if result:
+                results_final.append(result)
+            else:
+                return results_final
 
 
 def generate_pairlist(results):
@@ -81,11 +98,13 @@ def run_comparison(item1, item2, file1, file2, cutoff_score):
 
 
 def run(in_dir, cutoff_score):
+    thread_pool = ThreadPool(96)
     results = process_tei(in_dir, min_length)
 
     logger("Creating pairs...")
 
     paired_papers = create_pairs(results)
+
 
     logger("Done! Running comparisons.")
 
@@ -96,6 +115,6 @@ def run(in_dir, cutoff_score):
     comparisons = []
 
     for pair in paired_papers:
-        comparison = compare(pair['file1'], pair['file2'], pair['list1'], pair['list2'], cutoff_score)
+        comparison = thread_pool.starmap(compare, [(pair['file1'], pair['file2'], pair['list1'], pair['list2'], cutoff_score)])
         comparisons = comparisons + comparison
     return comparisons

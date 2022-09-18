@@ -39,6 +39,9 @@ def process_job(job):
     percent_complete = 0
 
     results = run(working_dir, job_cutoff)
+    
+    with open('results_tmp.txt', 'w') as f:
+        f.write(str(results))
 
     for item in results:
         item.update({'slug':job_id})

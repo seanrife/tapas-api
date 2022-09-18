@@ -33,6 +33,6 @@ analysis = {
 }
 
 system = {
-    'process_count': 190
+    'process_count': 400
 }
 

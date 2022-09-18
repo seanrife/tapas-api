@@ -9,8 +9,9 @@ nltk = ">=3.6.4"
 lxml = ">=4.6.5"
 strsim = "*"
 flask = "*"
+rank-bm25 = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.7"
+python_version = "3.8"
