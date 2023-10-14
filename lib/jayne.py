@@ -27,20 +27,20 @@ completed_list = []
 # This function makes me feel sad
 def compare(file1, file2, list1, list2, cutoff_score):
     logger(f"Comparing {file1} and {file2}.")
-    pool = Pool(processes=process_count)
-    
-    data_list = []
-    
-    results_final = []
-    
-    for item1 in list1:
-        for item2 in list2:
-            data_list.append((item1, item2, file1, file2, cutoff_score))
-    results = pool.starmap(run_comparison, data_list)
-    for result in results:
-        if result:
-            results_final.append(result)
-    return results_final
+    with Pool(processes=process_count) as pool:
+        
+        data_list = []
+        
+        results_final = []
+        
+        for item1 in list1:
+            for item2 in list2:
+                data_list.append((item1, item2, file1, file2, cutoff_score))
+        results = pool.starmap(run_comparison, data_list)
+        for result in results:
+            if result:
+                results_final.append(result)
+        return results_final
 
 
 def generate_pairlist(results):

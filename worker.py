@@ -16,6 +16,7 @@ then converts the PDFs to TEI, extracts the text, and
 looks for similarity (basically everything else).
 """
 
+
 UPLOAD_FOLDER = config.UPLOAD_FOLDER
 
 def process_job(job):
@@ -67,11 +68,11 @@ def process_job(job):
         execute_batch(cursor, query, results)
 
     update_status(job_id, "FINISHED")
-    
+
     end_time = time()
-    
+
     compute_time = end_time-start_time
-    
+
     logger(f"Job completed in {compute_time} seconds.")
 
 
