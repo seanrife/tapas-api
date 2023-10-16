@@ -7,6 +7,9 @@ from itertools import combinations
 import os
 import time
 from lib.common import logger, update_status, mkdirp
+from rank_bm25 import BM25Okapi
+from statistics import median
+
 
 """
 Main functions cribbed from https://github.com/seanrife/jayne
@@ -26,14 +29,23 @@ completed_list = []
 
 # This function makes me feel sad
 def compare(file1, file2, list1, list2, cutoff_score):
+
     logger(f"Comparing {file1} and {file2}.")
+    #if len(list1) == 0 or len(list2) == 0:
+    #    return []
     with Pool(processes=process_count) as pool:
         
         data_list = []
         
         results_final = []
         
+        #bm25 = BM25Okapi([doc.split(" ") for doc in list2])
+        
         for item1 in list1:
+            #doc_scores = bm25.get_scores(item1.split(" "))
+            #cutoff = median(doc_scores)
+            #for i, item2 in enumerate(list2):
+            #    if doc_scores[i] > cutoff:
             for item2 in list2:
                 data_list.append((item1, item2, file1, file2, cutoff_score))
         results = pool.starmap(run_comparison, data_list)
